@@ -1,0 +1,52 @@
+---
+import ContentSection from "@/components/sections/ContentSection.astro";
+import { Icon } from "astro-icon/components";
+import Button from "@/components/Button.astro";
+import type { ProcessItem } from "@/types";
+
+const process: Array<ProcessItem> = [
+  {
+    title: "Pre-Production",
+    description:
+      "We help you plan your video from start to finish. This includes scripting, storyboarding, casting, location scouting, and more.",
+    icon: "mdi:film-open-check",
+  },
+  {
+    title: "Production",
+    description:
+      "We bring your vision to life through high-quality video and audio production. Our team of professionals will make sure your video looks and sounds great.",
+    icon: "mingcute:video-camera-fill",
+  },
+  {
+    title: "Post Production",
+    description:
+      "We edit your video to perfection. This includes color correction, sound design, motion graphics, and more.",
+    icon: "mdi:movie-edit",
+  },
+];
+
+---
+
+<ContentSection title="Our Process">
+  <Fragment slot="lead">
+    Planning and producing a video can be a daunting task. We make it easy by being there every step from start to finish.
+  </Fragment>
+  <ul class="grid max-w-6xl grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    {
+      process.map(({ title, description, icon }) => (
+        <li class="flex flex-col items-center gap-4 border border-default bg-offset p-6">
+          <div class="size-16 rounded-full border-2 border-current p-3">
+            <Icon name={icon} class="size-full" />
+          </div>
+          <p class="text-center font-extrabold text-xl text-primary">{title}</p>
+          <p class="text-justify text-offset text-sm">{description}</p>
+        </li>
+      ))
+    }
+  </ul>
+  <Button 
+    buttonLink="/process" 
+    buttonText="View Our Process" 
+    iconName="mingcute:arrow-right-fill" 
+  />
+</ContentSection>

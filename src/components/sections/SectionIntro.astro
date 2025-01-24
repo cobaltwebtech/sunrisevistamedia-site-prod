@@ -1,0 +1,26 @@
+---
+import { Icon } from "astro-icon/components";
+import ContentSection from "@/components/sections/ContentSection.astro";
+import Button from "@/components/Button.astro";
+---
+
+<ContentSection title="Let us take your vision and turn it into a reality.">
+  <Icon slot="eyebrow" name="fluent-color:camera-24" class="size-24" />
+  <Fragment slot="lead">
+    We're a
+    <span class="text-primary">creativity-driven</span>
+    production company.
+  </Fragment>
+  <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+    <Button 
+      buttonLink="#" 
+      buttonText="Test Button" 
+      iconName="mdi:information-slab-circle" 
+    />
+    <Button 
+      buttonLink="#" 
+      buttonText="Another Button" 
+      iconName="mdi:information-slab-circle" 
+    />
+  </div>
+</ContentSection>

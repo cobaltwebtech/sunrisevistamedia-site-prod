@@ -1,0 +1,54 @@
+---
+import { Image } from "astro:assets";
+import Button from "@/components/Button.astro";
+// Destructure the props passed to the Astro component
+const { title, subTitle, btnExists, btnText, btnURL, btnIcon, img, imgAlt } =  Astro.props;
+// Define TypeScript interface for props
+interface Props {
+  title: string;
+  subTitle: string;
+  btnExists?: boolean;
+  btnText: string;
+  btnURL: string;
+  btnIcon: string;
+  img: any;
+  imgAlt: any;
+}
+---
+
+<section
+  class="mx-auto max-w-[85rem] items-center gap-16 px-4 py-10 sm:px-6 lg:grid lg:grid-cols-2 lg:px-8 lg:py-14 2xl:max-w-full"
+>
+  <div>
+    <!-- Title of the section -->
+    <h2
+      class="mb-4 text-balance text-4xl font-extrabold "
+    >
+      {title}
+    </h2>
+    <!-- Subtitle of the section -->
+    <p
+      class="mb-4 max-w-prose text-pretty font-light"
+    >
+      {subTitle}
+    </p>
+    <!-- Conditional rendering of the Button if 'btnExists' is true -->
+    {btnExists ? 
+      <div class="w-max">
+        <Button buttonText={btnText} buttonLink={btnURL} iconName={btnIcon} />
+      </div> 
+      : null
+    }
+  </div>
+  <div class="mt-8">
+    <!-- The Image component on the right side -->
+    <Image
+      class="w-full rounded-xl"
+      src={img}
+      alt={imgAlt}
+      draggable={"false"}
+      format={"avif"}
+      width="672"
+    />  
+  </div>
+</section>

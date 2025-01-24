@@ -1,0 +1,40 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ContentSection from "@/components/sections/ContentSection.astro";
+import Button from "@/components/Button.astro";
+import VideoGrid from "@/components/sections/VideoGrid.astro";
+import { Icon } from "astro-icon/components";
+import { SITE } from "@/constants";
+
+const pageTitle: string = `Our Work | ${SITE.title}`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "url": "https://www.sunrisevistamedia.com/",
+    "name": "Sunrise Vista Media",
+    "description": "Sunrise Vista Media is a full-service production company that specializes in creating high-quality video content.",
+    "inLanguage": "en-US"
+  }}
+>
+    <div class="space-y-24 px-8 py-32">
+        <ContentSection title="View Our Work">
+            <Icon slot="eyebrow" name="video" class="size-24" />
+            <Fragment slot="lead">
+                Sunrise Vista Media has worked with a variety of clients, from small businesses to large corporations.      
+            </Fragment>
+            <p class="max-w-6xl mt-8 text-lg text-center">
+                We can help you create high-quality video content that will help you reach your audience. Our work speaks for itself. Take a look at some of our past projects.
+            </p>
+            <Button 
+              buttonLink="/contact" 
+              buttonText="Schedule a Consultation" 
+              iconName="mdi:connect-without-contact" 
+            />
+        </ContentSection>
+        <VideoGrid />
+   </div>
+</BaseLayout>

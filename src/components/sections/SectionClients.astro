@@ -1,0 +1,31 @@
+---
+import { getEntry } from "astro:content";
+import ContentSection from "@/components/sections/ContentSection.astro";
+import ClientCard from "@/components/sections/ClientCard.astro";
+import Button from "@/components/Button.astro";
+
+const clientData = await getEntry("clients", "clients");
+const { clients } = clientData.data;
+
+const featuredClients = clients.filter((client) => "featured" in client);
+const orderedClients = featuredClients.sort(
+  (a, b) => (a.featured || 0) - (b.featured || 0)
+);
+---
+
+<ContentSection title="Our Clients">
+  <Fragment slot="lead">
+    Sunrise Vista Media has worked with a variety of clients, from small businesses to large corporations. Here are a few of the companies we have done work for.
+  </Fragment>
+  <div class="max-w-6xl space-y-2">
+    <div class="grid grid-cols-1 gap-16 md:grid-cols-2 lg:grid-cols-4">
+      {orderedClients.map((client) => <ClientCard site={client} />)}
+    </div>
+  </div>
+  <Button 
+    buttonLink="/our-work" 
+    buttonText="View Our Work" 
+    iconName="mingcute:arrow-right-fill" 
+  />
+</ContentSection>
+

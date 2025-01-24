@@ -1,0 +1,77 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Icon } from "astro-icon/components";
+import ContentSection from "@/components/sections/ContentSection.astro";
+import Button from "@/components/Button.astro";
+import ItemLeft from "@/components/sections/ItemLeft.astro";
+import ItemRight from "@/components/sections/ItemRight.astro";
+import { SITE } from "@/constants";
+import { getEntry } from "astro:content";
+
+// Fetch the services data from the content collection
+const pagesEntry = await getEntry("pages", "services-page");
+const { pageData } = pagesEntry.data;
+
+// Sort the services by order if it exists
+pageData.sort((a, b) => (a.order || 0) - (b.order || 0));
+
+const pageTitle: string = `Services | ${SITE.title}`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "url": "https://www.sunrisevistamedia.com/",
+    "name": "Sunrise Vista Media",
+    "description": "Sunrise Vista Media is a full-service production company that specializes in creating high-quality video content.",
+    "inLanguage": "en-US"
+  }}
+>
+    <div class="space-y-24 px-8 py-32">
+      <ContentSection title="Our Services">
+        <Icon slot="eyebrow" name="fluent-color:camera-24" class="size-24" />
+        <Fragment slot="lead">
+          As a video production company based out of Austin, Texas, we have the expertise and skills to showcase your vision. 
+        </Fragment>
+        <p class="max-w-6xl mt-8 text-lg text-center">
+          Storytelling is an art and Sunrise Vista Media has the passion for bringing your story to life.<br />
+          Focused content and stellar visuals is what makes our work incomparable!
+        </p>
+        <Button 
+          buttonLink="/contact" 
+          buttonText="Schedule a Consultation" 
+          iconName="mdi:connect-without-contact" 
+        />
+      
+      </ContentSection>
+      <!-- Render the services items either right or left side  -->
+      {pageData.map((service) => (
+        service.isItemRight ? (
+            <ItemRight
+                title={service.title}
+                subTitle={service.subTitle}
+                btnExists={service.btnExists}
+                btnText={service.btnText}
+                btnURL={service.btnURL}
+                btnIcon={service.btnIcon}
+                img={service.img}
+                imgAlt={service.imgAlt}
+            />
+        ) : (
+            <ItemLeft
+                title={service.title}
+                subTitle={service.subTitle}
+                btnExists={service.btnExists}
+                btnText={service.btnText}
+                btnURL={service.btnURL}
+                btnIcon={service.btnIcon}
+                img={service.img}
+                imgAlt={service.imgAlt}
+            />
+        )
+    ))}
+
+    </div>
+</BaseLayout>

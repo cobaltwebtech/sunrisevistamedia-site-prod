@@ -1,0 +1,19 @@
+---
+import { Icon } from "astro-icon/components";
+
+export interface Props {
+  buttonLink: string;
+  buttonText: string;
+  iconName: string;
+}
+
+const { buttonLink, buttonText, iconName } = Astro.props;
+---
+
+<a
+  href={buttonLink}
+  class="btn flex items-center justify-center gap-3 rounded-md px-6 py-4 bg-cyan-700 dark:bg-cyan-400 text-white dark:text-black"
+>
+  <Icon name={iconName} class="size-8" />
+  <span class="font-semibold">{buttonText}</span>
+</a>

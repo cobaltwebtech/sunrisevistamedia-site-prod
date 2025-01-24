@@ -1,0 +1,75 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Icon } from "astro-icon/components";
+import ContentSection from "@/components/sections/ContentSection.astro";
+import Button from "@/components/Button.astro";
+import ItemLeft from "@/components/sections/ItemLeft.astro";
+import ItemRight from "@/components/sections/ItemRight.astro";
+import { SITE } from "@/constants";
+import { getEntry } from "astro:content";
+
+// Fetch the processes data from the content collection
+const pagesEntry = await getEntry("pages", "process-page");
+const { pageData } = pagesEntry.data;
+
+// Sort the processes by order if it exists
+pageData.sort((a, b) => (a.order || 0) - (b.order || 0));
+
+const pageTitle: string = `Process | ${SITE.title}`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "url": "https://www.sunrisevistamedia.com/",
+    "name": "Sunrise Vista Media",
+    "description": "Sunrise Vista Media is a full-service production company that specializes in creating high-quality video content.",
+    "inLanguage": "en-US"
+  }}
+>
+    <div class="space-y-24 px-8 py-32">
+      <ContentSection title="Our Process">
+        <Icon slot="eyebrow" name="fluent-color:video-24" class="size-24" />
+        <Fragment slot="lead">
+          Planning, producing, and delivering a video can be a daunting task. We make it easy by being there every step from start to finish.  
+        </Fragment>
+        <p class="max-w-6xl mt-8 text-lg text-center">
+          Sunrise Vista Media is here to help you create that high-quality video content and make the process as easy as possible. We will work with you to plan, produce, and deliver a video that will help you reach your goals.
+        </p>
+        <Button 
+          buttonLink="/contact" 
+          buttonText="Schedule a Consultation" 
+          iconName="mdi:connect-without-contact" 
+        />
+      
+      </ContentSection>
+      <!-- Render the services items either right or left side  -->
+      {pageData.map((process) => (
+        process.isItemRight ? (
+            <ItemRight
+                title={process.title}
+                subTitle={process.subTitle}
+                btnExists={process.btnExists}
+                btnText={process.btnText}
+                btnURL={process.btnURL}
+                btnIcon={process.btnIcon}
+                img={process.img}
+                imgAlt={process.imgAlt}
+            />
+        ) : (
+            <ItemLeft
+                title={process.title}
+                subTitle={process.subTitle}
+                btnExists={process.btnExists}
+                btnText={process.btnText}
+                btnURL={process.btnURL}
+                btnIcon={process.btnIcon}
+                img={process.img}
+                imgAlt={process.imgAlt}
+            />
+        )
+      ))}
+    </div>
+</BaseLayout>

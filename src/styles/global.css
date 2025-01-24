@@ -1,0 +1,23 @@
+a,
+.btn {
+  @apply transition-colors duration-200;
+  @apply focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:ring-offset-transparent;
+}
+
+.gradient-text {
+  @apply bg-clip-text text-transparent;
+  @apply bg-gradient-to-br from-cyan-500 via-pink-500 to-cyan-500;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.modal.is-open {
+  @apply block;
+}

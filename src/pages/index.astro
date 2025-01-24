@@ -1,0 +1,28 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionProcess from "@/components/sections/SectionProcess.astro";
+import SectionServices from "@/components/sections/SectionServices.astro";
+import SectionIntro from "@/components/sections/SectionIntro.astro";
+import SectionClients from "@/components/sections/SectionClients.astro";
+import VideoHero from "@/components/sections/VideoHero.astro";
+---
+
+<BaseLayout
+isHomePage={true}
+structuredData={{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "url": "https://www.sunrisevistamedia.com/",
+  "name": "Sunrise Vista Media",
+  "description": "META DESCRIPTION HERE",
+  "inLanguage": "en-US"
+}}
+>
+  <VideoHero />
+  <div class="space-y-24 px-8 py-32">
+    <SectionIntro />
+    <SectionServices />
+    <SectionProcess />
+    <SectionClients />
+  </div>
+</BaseLayout>

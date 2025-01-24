@@ -1,0 +1,59 @@
+---
+import { Icon } from "astro-icon/components";
+import type { FooterLink } from "@/types";
+
+const links: Array<FooterLink> = [
+  {
+    url: "/contact",
+    description: "Contact Us",
+    icon: "mdi:envelope",
+  },
+  {
+    url: "https://vimeo.com/sunrisevistamedia",
+    description: "Vimeo Channel",
+    icon: "fa-brands:vimeo",
+  },
+  {
+    url: "https://www.facebook.com/Sunrisevistamedia",
+    description: "Facebook Page",
+    icon: "fa-brands:facebook",
+  },
+  {
+    url: "http://instagram.com/Sunrisevistamedia.com",
+    description: "Instagram Profile",
+    icon: "fa-brands:instagram",
+  },
+];
+---
+
+<footer class="py-8 sm:py-16 px-4 border-t-2 border-default bg-offset">
+  <div class="flex items-center justify-around w-full">
+    <div>
+      <p class="text-md font-extrabold">
+      © <span id="current-year"></span> Sunrise Vista Media <span class="font-normal text-sm">- All Rights Reserved</span>
+      </p>
+      <p class="text-sm font-light"> 
+        Austin, Texas
+      </p>
+      </div>
+    <ul class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+      {
+        links.map((link) => (
+          <li>
+            <a
+              class="flex size-10 sm:size-12 p-2 items-center justify-center border-2 border-current rounded-full"
+              href={link.url}
+              target="_blank"
+            >
+              <span class="sr-only">{link.description}</span>
+              <Icon class="size-full" name={link.icon} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  <p class="mt-8 text-xs text-center">
+    Website built by <a href="https://www.cobaltweb.tech/?utm_source=sunrise-vista-media&utm_medium=web&utm_campaign=client-site-links" target="_blank" class="text-cyan-600 dark:text-cyan-400">Cobalt Web Technologies</a> in Austin, TX
+  </p>
+</footer>
