@@ -1,4 +1,4 @@
-import ogImageSrc from "@/assets/social.jpg";
+import ogImageSrc from "@/assets/images/SVM-Logo.png";
 
 export const SITE = {
   title: "Sunrise Vista Media",

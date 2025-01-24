@@ -12,16 +12,13 @@ export interface Props {
 
 const { site } = Astro.props;
 
-const widths = [450, 800];
-const sizes = "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw";
 ---
 
 <figure class="p-12 group relative h-full w-full overflow-hidden bg-slate-600 dark:bg-slate-800 rounded-md">
   <Image
     class="h-auto w-full bg-cover object-cover transition-all duration-300 group-hover:scale-110 group-hover:opacity-20 group-focus:scale-110 group-focus:opacity-20"
     src={site.image}
-    widths={widths}
-    sizes={sizes}
+    width="240"
     alt={`Client logo of ${site.title}`}
   />
   <figcaption class="absolute inset-0">

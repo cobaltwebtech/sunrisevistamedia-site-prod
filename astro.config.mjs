@@ -1,4 +1,4 @@
-import vercel from "@astrojs/vercel";
+import vercel from "@astrojs/vercel/serverless";
 import tailwind from "@astrojs/tailwind";
 import icon from "astro-icon";
 import { defineConfig } from "astro/config";
@@ -7,9 +7,7 @@ import { defineConfig } from "astro/config";
 export default defineConfig({
   site: "https://www.sunrisevistamedia.com",
   prefetch: true,
-  build: {
-    assets: 'assets'
-  },
+  output: 'server',
   integrations: [
     tailwind(), 
     icon()
