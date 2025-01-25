@@ -1,0 +1,42 @@
+---
+export const prerender = true;
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ContentSection from "@/components/sections/ContentSection.astro";
+import Button from "@/components/Button.astro";
+import sitemap from "sitemap-ext:config"
+import { Icon } from "astro-icon/components";
+import { SITE } from "@/constants";
+
+// opt-out page from XML sitemap
+sitemap(false);
+
+const pageTitle: string = `Page Not Found | ${SITE.title}`;
+---
+
+<BaseLayout 
+  title={pageTitle}
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "url": "https://www.sunrisevistamedia.com/",
+    "name": "Sunrise Vista Media",
+    "description": "Sunrise Vista Media is a full-service production company that specializes in creating high-quality video content.",
+    "inLanguage": "en-US"
+  }}
+>
+  <div class="max-w-screen-2xl mx-auto space-y-24 px-8 py-32">
+    <ContentSection title="Page Not Found - 404">
+        <Icon slot="eyebrow" name="fluent-color:error-circle-24" class="size-24" />
+        <Fragment slot="lead">
+            Uh oh! Looks like that page does not exist. <br />
+            Let's get you back home      
+        </Fragment>
+        <Button 
+        buttonLink="/" 
+        buttonText="Go To Home" 
+        iconName="mdi:home" 
+        />
+    </ContentSection>
+  </div>
+</BaseLayout>

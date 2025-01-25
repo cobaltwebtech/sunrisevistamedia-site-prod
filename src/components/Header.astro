@@ -21,13 +21,13 @@ const navItems: Array<NavItem> = [
     <Logo />
   </a>
   <div>
-    <div class="flex items-center gap-6">
-      <nav class="hidden sm:block">
+    <div class="ml-4 flex items-center gap-6">
+      <nav class="hidden md:block">
         <ul class="flex items-center gap-6">
           {
             navItems.map(({ title, url }) => (
               <li>
-                <a class="text-md font-semibold" href={url}>
+                <a class="text-nowrap text-md font-semibold" href={url}>
                   {title}
                 </a>
               </li>
@@ -38,10 +38,10 @@ const navItems: Array<NavItem> = [
       <button
         id="open-nav-button"
         type="button"
-        class="btn sm:hidden"
+        class="btn md:hidden"
         aria-label="Navigation"
       >
-        <Icon name="mdi:menu" class="size-8" />
+        <Icon name="mingcute:menu-fill" class="size-8" />
       </button>
       <ThemeSwitcher />
     </div>
@@ -55,7 +55,7 @@ const navItems: Array<NavItem> = [
               class="btn"
               aria-label="Close navigation"
             >
-              <Icon name="mdi:close" class="size-8" />
+              <Icon name="mingcute:close-fill" class="size-8" />
             </button>
           </header>
           <div class="flex justify-center">

@@ -19,6 +19,7 @@ interface Props {
   structuredData?: object;
   lang?: string;
   externalScript?: string;
+  isHomePage?: boolean;
 }
 ---
 
@@ -64,8 +65,7 @@ We set the language of the page to English and add classes for scrollbar and scr
     <!-- Umami Analytics script tag -->
     <script is:inline src="https://umami.cobaltweb.tech/script.js" data-website-id={umamiId}></script>
     <!-- Pass in conditional external script if needed on defined pages -->
-    {externalScript && <script async defer {...externalScript}>
-    </script>}
+    {externalScript && (<script async defer {...externalScript}></script>)}
   </head>
   <body
     class="h-full overflow-x-hidden bg-default text-default text-base selection:bg-secondary selection:text-white"

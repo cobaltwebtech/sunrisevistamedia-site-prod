@@ -1,72 +1,40 @@
 ---
+import { Icon } from "astro-icon/components";
 const turnstileSiteKey = import.meta.env.TURNSTILE_PUBLIC_KEY;
-
-let errorMessage: string | null = null;
-
-if (Astro.request.method === "POST") {
-  try {
-    const formData = await Astro.request.formData();
-    const result = formSchema.safeParse(Object.fromEntries(formData));
-
-    if (!result.success) {
-      errorMessage = "Please fill out all required fields correctly.";
-    } else {
-      const { "cf-turnstile-response": turnstileResponse, ...formFields } = result.data;
-
-      // Verify the Turnstile token
-      const verificationResponse = await fetch(
-        "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            secret: import.meta.env.TURNSTILE_SECRET_KEY,
-            response: turnstileResponse,
-          }),
-        }
-      );
-
-      const verificationResult = await verificationResponse.json();
-
-      if (!verificationResult.success) {
-        errorMessage = "CAPTCHA verification failed. Please try again.";
-      } else {
-        // Proceed with form submission
-        const response = await fetch(`${Astro.url.origin}/api/sendEmailContact`, {
-          method: "POST",
-          body: formData,
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        // Redirect to the confirmation page
-        return Astro.redirect('/contact/submission-received/', 302);
-      }
-    }
-  } catch (e) {
-    console.error(`Error: ${e instanceof Error ? e.message : String(e)}`);
-    errorMessage = "An unexpected error occurred. Please try again.";
-  }
-}
 ---
 
-<form id="contactForm">
-    <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-    </div>
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-    </div>
-    <div>
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" required></textarea>
-    </div>
-    <div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>
-    <button type="submit">Send</button>
-</form>
-<div id="formMessage"></div>
+<div class="max-w-screen-sm mx-auto">
+    <form id="contact-form" method="POST">
+        <div class="grid gap-4">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div>
+                    <label for="firstname" class="sr-only">First Name</label>
+                    <input type="text" id="first-name" name="firstname" class="block w-full px-4 py-3 text-sm rounded-lg border-2 border-slate-400 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-800 dark:placeholder:text-slate-100 focus:border-slate-400 focus:outline-none focus:ring focus:ring-cyan-400 disabled:pointer-events-none disabled:opacity-50" required placeholder="First Name">
+                </div>
+                <div>
+                    <label for="lastname" class="sr-only">Last Name</label>
+                    <input type="text" id="last-name" name="lastname" class="block w-full px-4 py-3 text-sm rounded-lg border-2 border-slate-400 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-800 dark:placeholder:text-slate-100 focus:border-slate-400 focus:outline-none focus:ring focus:ring-cyan-400 disabled:pointer-events-none disabled:opacity-50" required placeholder="Last Name">
+                </div>
+            </div>
+            <div>
+                <label for="phone" class="sr-only">Phone Number</label>
+                <input type="text" id="phone" name="phone" class="block w-full px-4 py-3 text-sm rounded-lg border-2 border-slate-400 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-800 dark:placeholder:text-slate-100 focus:border-slate-400 focus:outline-none focus:ring focus:ring-cyan-400 disabled:pointer-events-none disabled:opacity-50" required placeholder="Phone Number">
+            </div>
+            <div>
+                <label for="email" class="sr-only">Email Address</label>
+                <input type="email" id="email" name="email" class="block w-full px-4 py-3 text-sm rounded-lg border-2 border-slate-400 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-800 dark:placeholder:text-slate-100 focus:border-slate-400 focus:outline-none focus:ring focus:ring-cyan-400 disabled:pointer-events-none disabled:opacity-50" required placeholder="Email Address">
+            </div>
+            <div>
+                <label for="message" class="sr-only">Message</label>
+                <textarea id="message" name="message" class="block w-full px-4 py-3 text-sm rounded-lg border-2 border-slate-400 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-100 placeholder:text-slate-800 dark:placeholder:text-slate-100 focus:border-slate-400 focus:outline-none focus:ring focus:ring-cyan-400 disabled:pointer-events-none disabled:opacity-50" placeholder="Additional Info"></textarea>
+            </div>
+            <div id="cf-turnstile" class="cf-turnstile" data-sitekey={turnstileSiteKey}></div>
+            <div class="max-w-max">
+                <button type="submit" class="btn flex items-center justify-center gap-3 rounded-md px-6 py-4 bg-cyan-700 dark:bg-cyan-400 text-white dark:text-black">
+                    <Icon name=mdi:send class="size-8" />
+                    Submit Message</button>
+            </div>
+        </div>
+    </form>
+    <div id="error-message" class="hidden"></div>
+</div>

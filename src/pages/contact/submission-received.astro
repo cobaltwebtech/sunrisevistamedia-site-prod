@@ -1,0 +1,41 @@
+---
+export const prerender = true;
+
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ContentSection from "@/components/sections/ContentSection.astro";
+import Button from "@/components/Button.astro";
+import sitemap from "sitemap-ext:config"
+import { Icon } from "astro-icon/components";
+import { SITE } from "@/constants";
+
+// opt-out page from XML sitemap
+sitemap(false);
+
+const pageTitle: string = `Submission Received | ${SITE.title}`;
+---
+
+<BaseLayout 
+  title={pageTitle}
+  structuredData={{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "url": "https://www.sunrisevistamedia.com/",
+    "name": "Sunrise Vista Media",
+    "description": "Sunrise Vista Media is a full-service production company that specializes in creating high-quality video content.",
+    "inLanguage": "en-US"
+  }}
+>
+  <div class="max-w-screen-2xl mx-auto space-y-24 px-8 py-32">
+    <ContentSection title="Submission Received">
+        <Icon slot="eyebrow" name="mdi:email-check" class="size-24 text-green-600" />
+        <Fragment slot="lead">
+            We have received your contact request. Our team will reach back out to you shortly.      
+        </Fragment>
+        <Button 
+        buttonLink="/" 
+        buttonText="Go To Home" 
+        iconName="mdi:home" 
+        />
+    </ContentSection>
+  </div>
+</BaseLayout>

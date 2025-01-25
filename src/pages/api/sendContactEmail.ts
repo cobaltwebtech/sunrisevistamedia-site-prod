@@ -1,12 +1,23 @@
 import type { APIRoute } from "astro";
 import Brevo from "@getbrevo/brevo";
 
-export const post: APIRoute = async ({ request }) => {
+export const HEAD: APIRoute = async ({ request }) => {
+  return new Response(null, {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+};
+
+export const POST: APIRoute = async ({ request }) => {
   const data = await request.formData();
-  const name = data.get("name");
-  const email = data.get("email");
-  const message = data.get("message");
-  const turnstileToken = data.get("cf-turnstile-response");
+  const firstname = data.get("firstname") as string;
+  const lastname = data.get("lastname") as string;
+  const phone = data.get("phone")as string;
+  const email = data.get("email")as string;
+  const message = data.get("message")as string;
+  const turnstileToken = data.get("cf-turnstile-response") as string | undefined;
 
   // Verify Turnstile token
   const turnstileVerification = await verifyTurnstileToken(turnstileToken as string);
@@ -26,7 +37,7 @@ export const post: APIRoute = async ({ request }) => {
 
   // Configure Brevo API client
   const apiInstance = new Brevo.TransactionalEmailsApi();
-  apiInstance.setApiKey(Brevo.TransactionalEmailsApiApiKeys.apiKey, process.env.BREVO_API_KEY);
+  apiInstance.setApiKey(Brevo.TransactionalEmailsApiApiKeys.apiKey, import.meta.env.BREVO_API_KEY);
 
   const sendSmtpEmail = new Brevo.SendSmtpEmail();
   sendSmtpEmail.subject = "New Contact Form Submission";
@@ -34,19 +45,21 @@ export const post: APIRoute = async ({ request }) => {
     <html>
       <body>
         <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Name:</strong> ${firstname} ${lastname}</p>
+        <p><strong>Phone Number:</strong> ${phone}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Message:</strong> ${message}</p>
       </body>
     </html>
   `;
-  sendSmtpEmail.sender = { name: "Your Website", email: process.env.EMAIL_FROM };
-  sendSmtpEmail.to = [{ email: process.env.EMAIL_TO }];
+  sendSmtpEmail.sender = { name: "Sunrise Vista Media", email: "info@cobaltweb.tech" };
+  sendSmtpEmail.to = [{ email: "cgarza@cobaltweb.tech" }];
 
   try {
     await apiInstance.sendTransacEmail(sendSmtpEmail);
     return new Response(
       JSON.stringify({
+        success: true,
         message: "Your message has been sent successfully!",
       }),
       {
@@ -60,6 +73,7 @@ export const post: APIRoute = async ({ request }) => {
     console.error("Error sending email:", error);
     return new Response(
       JSON.stringify({
+        error: true,
         message: "There was an error sending your message. Please try again later.",
       }),
       {
@@ -79,7 +93,7 @@ async function verifyTurnstileToken(token: string) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      secret: process.env.TURNSTILE_SECRET_KEY,
+      secret: import.meta.env.TURNSTILE_SECRET_KEY,
       response: token,
     }),
   })

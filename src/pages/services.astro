@@ -1,6 +1,4 @@
 ---
-export const prerender = true;
-
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { Icon } from "astro-icon/components";
 import ContentSection from "@/components/sections/ContentSection.astro";
@@ -31,7 +29,7 @@ const pageTitle: string = `Services | ${SITE.title}`;
     "inLanguage": "en-US"
   }}
 >
-    <div class="space-y-24 px-8 py-32">
+    <div class="max-w-screen-2xl mx-auto space-y-24 px-8 py-32">
       <ContentSection title="Our Services">
         <Icon slot="eyebrow" name="fluent-color:camera-24" class="size-24" />
         <Fragment slot="lead">
