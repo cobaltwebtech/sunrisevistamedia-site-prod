@@ -1,8 +1,8 @@
 ---
 import { getImage } from "astro:assets";
 import { OG, SEO, SITE } from "@/constants";
-import faviconSvgSrc from "@/assets/icon.svg";
-import faviconSrc from "@/assets/icon.png";
+import faviconSvgSrc from "@/assets/favicon/icon.svg";
+import faviconSrc from "@/assets/favicon/icon.png";
 import { join } from 'path';
 import { AstroFont } from 'astro-font';
 
@@ -35,7 +35,7 @@ const socialImageRes = await getImage({
   width: 1200,
   height: 600,
 });
-const socialImage = Astro.url.origin + socialImageRes.src; // Get the full URL of the image (https://stackoverflow.com/a/9858694)
+const socialImage = Astro.url.origin + socialImageRes.src;
 
 const languages: { [key: string]: string } = {
   en: "",
