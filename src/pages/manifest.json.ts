@@ -35,14 +35,14 @@ export const GET: APIRoute = async () => {
   )
 
   const manifest = {
-    short_name: "Cobalt",
-    name: "Cobalt Web Technologies",
+    short_name: "SVM",
+    name: "Sunrise Vista Media",
     icons,
     display: "minimal-ui",
     id: "/",
     start_url: "/",
-    theme_color: "#001689",
-    background_color: "#000835",
+    theme_color: "#ff4e9e",
+    background_color: "#0f172a",
   }
 
   return new Response(JSON.stringify(manifest))
